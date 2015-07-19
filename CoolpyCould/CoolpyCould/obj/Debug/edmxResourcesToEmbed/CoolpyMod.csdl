@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CCModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CCEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="user_tableSet" EntityType="CCModel.user_table" />
+    <EntitySet Name="device_tableSet" EntityType="CCModel.device_table" />
+    <AssociationSet Name="user_tabledevice_table" Association="CCModel.user_tabledevice_table">
+      <End Role="user_table" EntitySet="user_tableSet" />
+      <End Role="device_table" EntitySet="device_tableSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="user_table">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="u_用户名" Nullable="false" />
+    <Property Type="String" Name="u_密码" Nullable="false" />
+    <Property Type="String" Name="u_akey" Nullable="false" />
+    <Property Type="String" Name="u_邮箱" Nullable="false" />
+    <Property Type="String" Name="u_备注" Nullable="false" />
+    <NavigationProperty Name="device_table" Relationship="CCModel.user_tabledevice_table" FromRole="user_table" ToRole="device_table" />
+  </EntityType>
+  <EntityType Name="device_table">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="d_设备ID" Nullable="false" />
+    <Property Type="String" Name="d_名称" Nullable="false" />
+    <Property Type="String" Name="d_介绍" Nullable="false" />
+    <Property Type="String" Name="d_标签" Nullable="false" />
+    <Property Type="String" Name="d_所在地" Nullable="false" />
+    <Property Type="String" Name="d_经纬值" Nullable="false" />
+    <NavigationProperty Name="user_table" Relationship="CCModel.user_tabledevice_table" FromRole="device_table" ToRole="user_table" />
+  </EntityType>
+  <Association Name="user_tabledevice_table">
+    <End Type="CCModel.user_table" Role="user_table" Multiplicity="1" />
+    <End Type="CCModel.device_table" Role="device_table" Multiplicity="*" />
+  </Association>
+</Schema>
